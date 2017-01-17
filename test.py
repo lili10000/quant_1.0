@@ -1,6 +1,7 @@
 # coding=utf-8
 import tushare as ts
 import strategy
+import sendEmail
 
 basic = ts.get_stock_basics()
 
@@ -9,11 +10,10 @@ lostCount = 0
 sum = 0
 mean = 0
 
-
 for stock in basic.index:
-    print stock
+    print "\nstaty " + stock +"\n"
     try:
-        df = ts.get_h_data(stock, start='2016-01-01')
+        df = ts.get_h_data(stock, start='2015-01-01')
     except:
         print "[err] get_h_data err"
         continue
@@ -32,13 +32,14 @@ for stock in basic.index:
         print "[lost] inc = " + str(inc) + " winCount = " + str(winCount) + " lostCount = " + str(lostCount) + " sum = " + str(sum)
 
     sum += inc
-# mean = sum / (winCount + lostCount)
-# print "winCount = " + str(winCount)
-# print "lostCount = " + str(lostCount)
-# print "EV = " + str(mean)
 
-#mean = sum / (winCount + lostCount)
+mean = sum / (winCount + lostCount)
+result = "winCount = " + str(winCount) + "\n"
+result += "lostCount = " + str(lostCount) + "\n"
+result += "sumCount = " + str(lostCount + winCount) + "\n"
+result += "EV = " + str(mean) + "\n"
 
+sendEmail.sendMailToMe_comm("量化策略分析",result)
         
     
 # for stock in basic:

@@ -42,4 +42,4 @@ emailText +=  buyInfo
 emailText += "【卖出】\n"
 emailText +=  sellInfo
 print emailText
-sendEmail.sendMailToMe(emailText)
+sendEmail.sendMailToMe_quantDaily(emailText)

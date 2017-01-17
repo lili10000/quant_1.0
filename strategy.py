@@ -76,3 +76,36 @@ def calcMeanComplexe(priceArray):
 
 
     return (bool(asserInc > priceInc), (asserInc - priceInc) )
+
+def calcMeanComplexe_today(priceArray):
+    shortArray = getMean(priceArray, 5)
+    midArray = getMean(priceArray, 30)
+    longArray = getMean(priceArray, 60)
+
+    todayIndex = len(priceArray) - 1
+    now = priceArray[todayIndex]
+    short = shortArray[todayIndex]
+    mid = midArray[todayIndex]
+    long = longArray[todayIndex]
+
+    yestodayIndex = todayIndex - 1
+    yes_now = priceArray[yestodayIndex]
+    yes_short = shortArray[yestodayIndex]
+    yes_mid = midArray[yestodayIndex]
+    yes_long = longArray[yestodayIndex]
+
+    butFlag = bool(0)
+    buy = checkBuy(now, short, mid, long)
+    yesBuy = checkBuy(yes_now, yes_short, yes_mid, yes_long)
+    # if buy and (yesBuy == 0) :
+    if buy:
+        butFlag = bool(1)
+
+    sellFlag = bool(0)  
+    sell = checkSell(now, short, mid, long)  
+    yesSell = checkSell(yes_now, yes_short, yes_mid, yes_long)
+    # if sell and (checkSell == 0):
+    if sell:
+        sellFlag = bool(1)
+
+    return (butFlag, sellFlag, now)

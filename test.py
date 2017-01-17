@@ -13,24 +13,29 @@ mean = 0
 for stock in basic.index:
     print stock
     try:
-        df = ts.get_h_data(stock, start='2015-01-01')
+        df = ts.get_h_data(stock, start='2016-01-01')
     except:
+        print "[err] get_h_data err"
+        continue
+
+    if df is None:
+        print "[err] df is None"
         continue
 
     ok, inc = strategy.calcMeanComplexe(df["close"])
     print ""
     if ok :
         winCount += 1
-        print "[win] inc = " + str(inc)
+        print "[win] inc = " + str(inc) + " winCount = " + str(winCount) + " lostCount = " + str(lostCount) + " sum = " + str(sum)
     else :
         lostCount += 1
-        print "[lost] inc = " + str(inc)
+        print "[lost] inc = " + str(inc) + " winCount = " + str(winCount) + " lostCount = " + str(lostCount) + " sum = " + str(sum)
 
     sum += inc
-mean = sum / (winCount + lostCount)
-print "winCount = " + str(winCount)
-print "lostCount = " + str(lostCount)
-print "EV = " + str(mean)
+# mean = sum / (winCount + lostCount)
+# print "winCount = " + str(winCount)
+# print "lostCount = " + str(lostCount)
+# print "EV = " + str(mean)
 
 #mean = sum / (winCount + lostCount)
 

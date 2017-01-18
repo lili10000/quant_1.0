@@ -3,51 +3,46 @@ import tushare as ts
 import strategy
 import sendEmail
 
-basic = ts.get_stock_basics()
-
-winCount = 0
-lostCount = 0
-sum = 0
-mean = 0
-
-for stock in basic.index:
-    print "\nstaty " + stock +"\n"
+def testStrategy():
     try:
-        df = ts.get_h_data(stock, start='2015-01-01')
+        basic = ts.get_stock_basics()
     except:
-        print "[err] get_h_data err"
-        continue
+        print "get_stock_basics err"
+        return -1
 
-    if df is None:
-        print "[err] df is None"
-        continue
+    winCount = 0
+    lostCount = 0
+    sum = 0
+    mean = 0
 
-    ok, inc = strategy.calcMeanComplexe(df["close"])
-    print ""
-    if ok :
-        winCount += 1
-        print "[win] inc = " + str(inc) + " winCount = " + str(winCount) + " lostCount = " + str(lostCount) + " sum = " + str(sum)
-    else :
-        lostCount += 1
-        print "[lost] inc = " + str(inc) + " winCount = " + str(winCount) + " lostCount = " + str(lostCount) + " sum = " + str(sum)
+    for stock in basic.index:
+        print "\nstaty " + stock +"\n"
+        try:
+            df = ts.get_h_data(stock, start='2015-01-01')
+        except:
+            print "[err] get_h_data err"
+            continue
 
-    sum += inc
+        if df is None:
+            print "[err] df is None"
+            continue
 
-mean = sum / (winCount + lostCount)
-result = "winCount = " + str(winCount) + "\n"
-result += "lostCount = " + str(lostCount) + "\n"
-result += "sumCount = " + str(lostCount + winCount) + "\n"
-result += "EV = " + str(mean) + "\n"
+        ok, inc = strategy.calcMeanComplexe(df["close"])
+        print ""
+        if ok :
+            winCount += 1
+            print "[win] inc = " + str(inc) + " winCount = " + str(winCount) + " lostCount = " + str(lostCount) + " sum = " + str(sum)
+        else :
+            lostCount += 1
+            print "[lost] inc = " + str(inc) + " winCount = " + str(winCount) + " lostCount = " + str(lostCount) + " sum = " + str(sum)
 
-sendEmail.sendMailToMe_comm("量化策略分析",result)
-        
-    
-# for stock in basic:
-    
-#     print stock
-#      break
-# df = ts.get_h_data("600000")
-# strategy.calcMeanComplexe(df["close"])
-# for col in df.columns:
-#     print col
-#     break
+        sum += inc
+
+    mean = sum / (winCount + lostCount)
+    result = "winCount = " + str(winCount) + "\n"
+    result += "lostCount = " + str(lostCount) + "\n"
+    result += "sumCount = " + str(lostCount + winCount) + "\n"
+    result += "EV = " + str(mean) + "\n"
+
+    sendEmail.sendMailToMe_comm("量化策略分析",result)
+    return 0

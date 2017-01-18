@@ -17,7 +17,7 @@ def checkToday():
     buy = bool(0)
     sell = bool(0)
 
-    stockPool = ["600816", "600309", "600196", "600535", "600519", "600674", "002053"]
+    stockPool = ["600816", "600309", "600196", "600535", "600519", "600674", "002053","000895","603288","600900","000333", "600036", "000623", "600000", "000858", "600886", "300124", "300012"]
 
 
     buyInfo = ""
@@ -30,10 +30,10 @@ def checkToday():
             df = ts.get_h_data(stock, start='2015-01-01')
             today = df.index[0]
         except:
-            continue
+            return -1
 
         if df is None:
-            continue
+            return -1
         price = 0
         buy, sell, price = strategy.calcMeanComplexe_today(df["close"])
         if buy:

@@ -8,6 +8,7 @@ def testStrategy():
         basic = ts.get_stock_basics()
     except:
         print "get_stock_basics err"
+        stock_basic_info.csv
         return -1
 
     winCount = 0

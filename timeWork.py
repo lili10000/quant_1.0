@@ -11,7 +11,7 @@ def getSleepTime():
     print "Must sleep %d seconds" % skipSeconds
     return skipSeconds
 
-
+calcToday.checkToday()
 while 1:
     sleepTime = getSleepTime()
     time.sleep(sleepTime)

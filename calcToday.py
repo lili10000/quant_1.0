@@ -26,14 +26,18 @@ def checkToday():
     for stock in stockPool:
         stockName = (basic['name'][basic.index==stock])[0]
         print "\n start " + stockName + "\n"
-        try:
-            df = ts.get_h_data(stock, start='2015-01-01')
-            today = df.index[0]
-        except:
-            return -1
+        ctrl = 1
+        while ctrl:
+            try:
+                df = ts.get_h_data(stock, start='2015-01-01')
+                today = df.index[0]
+                ctrl = 0
+            except:
+                print "get_h_data err"
 
-        if df is None:
-            return -1
+            if df is None:
+                print "df is None"
+
         price = 0
         buy, sell, price = strategy.calcMeanComplexe_today(df["close"])
         if buy:

@@ -101,15 +101,15 @@ def calcMeanComplexe_today(priceArray):
     butFlag = bool(0)
     buy = checkBuy(now, short, mid, long)
     yesBuy = checkBuy(yes_now, yes_short, yes_mid, yes_long)
-    if buy and (yesBuy == 0) :
-    # if buy:
+    # if buy and (yesBuy == 0) :
+    if buy:
         butFlag = bool(1)
 
     sellFlag = bool(0)  
     sell = checkSell(now, short, mid, long)  
     yesSell = checkSell(yes_now, yes_short, yes_mid, yes_long)
-    if sell and (checkSell == 0):
-    # if sell:
+    #if sell and (yesSell == 0):
+    if sell:
         sellFlag = bool(1)
 
     return (butFlag, sellFlag, now)
